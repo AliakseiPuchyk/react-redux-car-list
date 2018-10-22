@@ -3,7 +3,15 @@ import React, { Component } from "react";
 class Pages extends Component {
     render() {
         const pages = [];
-        for (let i = 0; i < this.props.pagesAmount; i++) {
+        for (
+            let i =
+                Number(this.props.currentPage) < 6
+                    ? 0
+                    : Number(this.props.currentPage) - 3;
+            i < Number(this.props.currentPage) + 3 &&
+            i < this.props.pagesAmount;
+            i++
+        ) {
             pages.push(i + 1);
         }
         return (
