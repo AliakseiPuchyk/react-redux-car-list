@@ -1,6 +1,8 @@
-let rowId = 0;
-export const addRow = data => ({
-    type: "ADD_ROW",
-    id: rowId++,
+export const changePage = data => ({
+    type: "CHANGE_PAGE",
+    data
+});
+export const visibleRows = data => ({
+    type: "SET_VISIBILE_ROWS",
     data
 });
