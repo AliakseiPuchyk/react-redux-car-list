@@ -10,7 +10,7 @@ class App extends Component {
         this.handleChildClick = this.handleChildClick.bind(this);
     }
     componentWillMount() {
-        const carList = require("../json/cars-small.json");
+        const carList = require("../json/cars-huge.json");
         carList.data.map(row => this.props.dispatch(saveRow(row)));
     }
 
@@ -19,12 +19,12 @@ class App extends Component {
     }
 
     render() {
-        const { rows, pagesAmount } = this.props;
+        const { visibleRows, pagesAmount, currentPage } = this.props;
         return (
             <div>
-                <Table rows={rows} />
+                <Table rows={visibleRows} />
                 <Pages
-                    currentPage={this.props.currentPage}
+                    currentPage={currentPage}
                     pagesAmount={pagesAmount}
                     onClick={this.handleChildClick}
                 />
@@ -34,9 +34,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    rows: state.rows.rows,
-    pages: state.rows.pages,
-    rowsPerPage: state.rows.rowsPerPage,
+    visibleRows: state.rows.visibleRows,
     currentPage: state.rows.currentPage,
     pagesAmount: state.rows.pagesAmount
 });

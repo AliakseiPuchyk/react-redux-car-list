@@ -14,7 +14,7 @@ class Pages extends Component {
                             <li
                                 key={i}
                                 className={
-                                    i == this.props.currentPage
+                                    i === Number(this.props.currentPage)
                                         ? "page-item current-page"
                                         : "page-item"
                                 }

@@ -1,7 +1,8 @@
 const initialState = {
     rows: [],
+    visibleRows: [],
     pagesAmount: 0,
-    rowsPerPage: 2,
+    rowsPerPage: 10,
     currentPage: 1
 };
 
@@ -18,11 +19,21 @@ function tableApp(state = initialState, action) {
                         id: rowId++
                     }
                 ],
-                pagesAmount: Math.ceil(state.rows.length / state.rowsPerPage)
+                pagesAmount: Math.ceil(
+                    (state.rows.length + 1) / state.rowsPerPage
+                ),
+                visibleRows:
+                    state.rows.length <= state.rowsPerPage
+                        ? [...state.rows]
+                        : state.visibleRows
             });
         case "CHANGE_PAGE":
+            let indexOfLastRow = action.data * state.rowsPerPage;
+            let indexOfFirstRow = indexOfLastRow - state.rowsPerPage;
+
             return Object.assign({}, state, {
-                currentPage: action.data
+                currentPage: action.data,
+                visibleRows: state.rows.slice(indexOfFirstRow, indexOfLastRow)
             });
         default:
             return state;
