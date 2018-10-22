@@ -2,24 +2,32 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Table from "../components/Table";
 import Pages from "../components/Pages";
-import { visibleRows } from "../actions/index";
+import { saveRow, changePage } from "../actions/index";
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChildClick = this.handleChildClick.bind(this);
+    }
     componentWillMount() {
         const carList = require("../json/cars-small.json");
-        carList.data.map(row => this.props.dispatch(visibleRows(row)));
+        carList.data.map(row => this.props.dispatch(saveRow(row)));
+    }
 
-        // carList.data.rowsPerPage = this.state.rowsPerPage;
-        // carList.data.currentPage = this.state.currentPage;
-        // this.props.dispatch(calculatePages(carList.data));
+    handleChildClick(id) {
+        this.props.dispatch(changePage(id));
     }
 
     render() {
-        const { rows, pages } = this.props;
+        const { rows, pagesAmount } = this.props;
         return (
             <div>
                 <Table rows={rows} />
-                <Pages pages={pages} />
+                <Pages
+                    currentPage={this.props.currentPage}
+                    pagesAmount={pagesAmount}
+                    onClick={this.handleChildClick}
+                />
             </div>
         );
     }
@@ -27,7 +35,10 @@ class App extends Component {
 
 const mapStateToProps = state => ({
     rows: state.rows.rows,
-    pages: state.rows.pages
+    pages: state.rows.pages,
+    rowsPerPage: state.rows.rowsPerPage,
+    currentPage: state.rows.currentPage,
+    pagesAmount: state.rows.pagesAmount
 });
 
 export default connect(mapStateToProps)(App);
