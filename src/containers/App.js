@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Table from "../components/Table";
 import Pages from "../components/Pages";
-import { saveRow, changePage } from "../actions/index";
+import { saveRows, changePage, saveCollectionLength } from "../actions/index";
 
 class App extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class App extends Component {
 
     componentWillMount() {
         this.getRequestAndSaveRows();
+        this.getCollectionLength();
     }
 
     handleChildClick(id) {
@@ -19,12 +20,24 @@ class App extends Component {
         this.getRequestAndSaveRows(id);
     }
 
+    getCollectionLength() {
+        let xhr = this.createCORSRequest(
+            "GET",
+            "http://localhost:3001/api/getColleLength"
+        );
+        xhr.onload = () => {
+            this.props.dispatch(
+                saveCollectionLength(JSON.parse(xhr.responseText))
+            );
+        };
+
+        xhr.send();
+    }
+
     getRequestAndSaveRows(currentPage) {
-        let page = 0;
+        let page = this.props.currentPage;
         if (currentPage) {
             page = currentPage;
-        } else {
-            page = this.props.currentPage;
         }
 
         let xhr = this.createCORSRequest(
@@ -36,9 +49,7 @@ class App extends Component {
         );
 
         xhr.onload = () => {
-            JSON.parse(xhr.responseText).map(row =>
-                this.props.dispatch(saveRow(row))
-            );
+            this.props.dispatch(saveRows(JSON.parse(xhr.responseText)));
         };
 
         xhr.send();

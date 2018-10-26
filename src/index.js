@@ -15,7 +15,6 @@ const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(thunk))
 );
-// const store = createStore(rootReducer, applyMiddleware(thunk));
 
 render(
     <Provider store={store}>

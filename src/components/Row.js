@@ -1,11 +1,11 @@
 import React from "react";
 
-const Row = ({ data }) => (
+const Row = ({ row }) => (
     <tr>
-        <td>{data.vin}</td>
-        <td>{data.year}</td>
-        <td>{data.brand}</td>
-        <td>{data.color}</td>
+        <td>{row.vin}</td>
+        <td>{row.year}</td>
+        <td>{row.brand}</td>
+        <td>{row.color}</td>
     </tr>
 );
 

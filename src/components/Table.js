@@ -17,7 +17,7 @@ class Table extends Component {
                         </thead>
                         <tbody>
                             {this.props.rows.map(row => (
-                                <Row key={row.data._id} {...row} />
+                                <Row key={row._id} row={row} />
                             ))}
                         </tbody>
                     </table>

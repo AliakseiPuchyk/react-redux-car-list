@@ -1,25 +1,23 @@
 const initialState = {
     rows: [],
-    pagesAmount: 500,
+    pagesAmount: 0,
     rowsPerPage: 10,
     currentPage: 1
 };
 
 export function tableApp(state = initialState, action) {
     switch (action.type) {
-        case "SAVE_ROW":
+        case "SAVE_ROWS":
             return Object.assign({}, state, {
-                rows: [
-                    ...state.rows,
-                    {
-                        data: action.data
-                    }
-                ]
+                rows: [...action.data]
             });
         case "CHANGE_PAGE":
             return Object.assign({}, state, {
-                currentPage: action.data,
-                rows: []
+                currentPage: action.data
+            });
+        case "SAVE_COLLECTION_LENGTH":
+            return Object.assign({}, state, {
+                pagesAmount: action.data
             });
         default:
             return state;
