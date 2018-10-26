@@ -9,20 +9,56 @@ class App extends Component {
         super(props);
         this.handleChildClick = this.handleChildClick.bind(this);
     }
+
     componentWillMount() {
-        const carList = require("../json/cars-huge.json");
-        carList.data.map(row => this.props.dispatch(saveRow(row)));
+        this.getRequestAndSaveRows();
     }
 
     handleChildClick(id) {
         this.props.dispatch(changePage(id));
+        this.getRequestAndSaveRows(id);
+    }
+
+    getRequestAndSaveRows(currentPage) {
+        let page = 0;
+        if (currentPage) {
+            page = currentPage;
+        } else {
+            page = this.props.currentPage;
+        }
+
+        let xhr = this.createCORSRequest(
+            "GET",
+            "http://localhost:3001/api/getCars?page=" +
+                page +
+                "&limit=" +
+                this.props.rowsPerPage
+        );
+
+        xhr.onload = () => {
+            JSON.parse(xhr.responseText).map(row =>
+                this.props.dispatch(saveRow(row))
+            );
+        };
+
+        xhr.send();
+    }
+
+    createCORSRequest(method, url) {
+        let xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+            xhr.open(method, url, true);
+        } else {
+            xhr = null;
+        }
+        return xhr;
     }
 
     render() {
-        const { visibleRows, pagesAmount, currentPage } = this.props;
+        const { rows, pagesAmount, currentPage } = this.props;
         return (
             <div>
-                <Table rows={visibleRows} />
+                <Table rows={rows} />
                 <Pages
                     currentPage={currentPage}
                     pagesAmount={pagesAmount}
@@ -34,9 +70,10 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-    visibleRows: state.rows.visibleRows,
-    currentPage: state.rows.currentPage,
-    pagesAmount: state.rows.pagesAmount
+    rows: state.tableApp.rows,
+    rowsPerPage: Number(state.tableApp.rowsPerPage),
+    currentPage: Number(state.tableApp.currentPage),
+    pagesAmount: Number(state.tableApp.pagesAmount)
 });
 
 export default connect(mapStateToProps)(App);

@@ -2,17 +2,15 @@ import React, { Component } from "react";
 
 class Pages extends Component {
     render() {
-        const pages = [];
-        for (
-            let i =
-                Number(this.props.currentPage) < 6
-                    ? 0
-                    : Number(this.props.currentPage) - 3;
-            i < Number(this.props.currentPage) + 3 &&
-            i < this.props.pagesAmount;
-            i++
-        ) {
-            pages.push(i + 1);
+        let pages = [];
+        let pageId = 1;
+
+        if (this.props.currentPage > 4) {
+            pageId = this.props.currentPage - 3;
+        }
+
+        for (let i = pageId; i < pageId + 7; i++) {
+            pages.push(i);
         }
         return (
             <nav className="row m-3">
@@ -22,7 +20,7 @@ class Pages extends Component {
                             <li
                                 key={i}
                                 className={
-                                    i === Number(this.props.currentPage)
+                                    i === this.props.currentPage
                                         ? "page-item current-page"
                                         : "page-item"
                                 }

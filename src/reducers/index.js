@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import rows from "./tableApp";
+import { tableApp } from "./tableApp";
 
-export default combineReducers({ rows });
+export default combineReducers({ tableApp });

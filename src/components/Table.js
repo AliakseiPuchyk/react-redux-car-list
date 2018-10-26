@@ -9,7 +9,6 @@ class Table extends Component {
                     <table className="table table-dark">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Vin</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Brand</th>
@@ -18,7 +17,7 @@ class Table extends Component {
                         </thead>
                         <tbody>
                             {this.props.rows.map(row => (
-                                <Row key={row.id} {...row} />
+                                <Row key={row.data._id} {...row} />
                             ))}
                         </tbody>
                     </table>
