@@ -1,4 +1,6 @@
-const initialState = {
+import * as listOfActions from "../actions";
+
+export const initialState = {
     rows: [],
     pagesAmount: 0,
     rowsPerPage: 10,
@@ -7,15 +9,15 @@ const initialState = {
 
 export function tableApp(state = initialState, action) {
     switch (action.type) {
-        case "SAVE_ROWS":
+        case listOfActions.SAVE_ROWS:
             return Object.assign({}, state, {
                 rows: [...action.data]
             });
-        case "CHANGE_PAGE":
+        case listOfActions.CHANGE_PAGE:
             return Object.assign({}, state, {
                 currentPage: action.data
             });
-        case "SAVE_COLLECTION_LENGTH":
+        case listOfActions.SAVE_COLLECTION_LENGTH:
             return Object.assign({}, state, {
                 pagesAmount: action.data
             });
