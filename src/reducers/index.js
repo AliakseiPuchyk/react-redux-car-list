@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-import { tableApp } from "./tableApp";
+import { tableApp } from "./TableApp";
 
 export default combineReducers({ tableApp });

@@ -1,4 +1,4 @@
-import * as reducer from "../reducers/tableApp";
+import * as reducer from "../reducers/TableApp";
 import * as listOfActions from "../actions";
 
 const state = {
